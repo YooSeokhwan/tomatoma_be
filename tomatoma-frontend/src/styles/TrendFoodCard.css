@@ -1,0 +1,111 @@
+.trend-food-card {
+  padding: 14px;
+  background-color: var(--primary-white);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  flex-shrink: 0;
+}
+
+.trend-food-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--text-light);
+  transform: translateY(-2px);
+}
+
+.trend-food-card.selected {
+  border-color: var(--text-primary);
+  background-color: var(--bg-light);
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.category-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-white);
+}
+
+.rank {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.food-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+
+.frequency-section {
+  margin-bottom: 12px;
+}
+
+.frequency-section .label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.frequency-bar {
+  width: 100%;
+  height: 6px;
+  background-color: var(--bg-gray);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF5252, #FF9800);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.frequency-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+}
+
+.place-count {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.card-footer .btn {
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+@media (max-width: 767px) {
+  .trend-food-card {
+    padding: 12px;
+  }
+
+  .food-name {
+    font-size: 14px;
+  }
+}

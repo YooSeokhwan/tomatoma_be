@@ -1,0 +1,30 @@
+.sort-dropdown {
+  padding: 8px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  background-color: var(--primary-white);
+  color: var(--text-primary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-family: inherit;
+  min-width: 120px;
+}
+
+.sort-dropdown:hover {
+  border-color: var(--text-light);
+  background-color: var(--bg-light);
+}
+
+.sort-dropdown:focus {
+  outline: none;
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 3px rgba(33, 33, 33, 0.1);
+}
+
+@media (max-width: 767px) {
+  .sort-dropdown {
+    font-size: 12px;
+    min-width: 100px;
+  }
+}

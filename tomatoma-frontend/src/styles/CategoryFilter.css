@@ -1,0 +1,64 @@
+.category-filter {
+  flex-shrink: 0;
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.category-btn {
+  padding: 8px 12px;
+  border: 2px solid var(--border-light);
+  background-color: transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.category-btn:hover {
+  border-color: var(--text-light);
+}
+
+.category-btn.active {
+  color: var(--primary-white);
+  border-width: 2px;
+}
+
+.category-icon {
+  font-size: 14px;
+}
+
+.category-name {
+  font-weight: 500;
+}
+
+.category-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  flex: 1;
+}
+
+@media (max-width: 767px) {
+  .category-buttons {
+    gap: 6px;
+  }
+
+  .category-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+}

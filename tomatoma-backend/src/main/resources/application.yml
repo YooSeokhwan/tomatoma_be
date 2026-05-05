@@ -42,9 +42,9 @@ server:
 # Google APIs Configuration
 google:
   maps:
-    api-key: AIzaSyAVFfCiaAyAAO9ISU6HET1bwQyywsxAEt0
+    api-key: ${GOOGLE_MAPS_API_KEY:your_google_maps_api_key}
   places:
-    api-key: AIzaSyAVFfCiaAyAAO9ISU6HET1bwQyywsxAEt0
+    api-key: ${GOOGLE_MAPS_API_KEY:your_google_maps_api_key}
 
 # External APIs Configuration
 external-apis:

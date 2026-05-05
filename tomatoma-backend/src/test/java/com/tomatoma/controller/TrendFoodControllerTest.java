@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -92,8 +93,25 @@ class TrendFoodControllerTest {
 
     @Test
     void getTrendingFood_byId_returnsSuccessResponse() throws Exception {
+        TrendFoodDTO dto = TrendFoodDTO.builder()
+                .id(1L).name("마라탕").category("중식")
+                .search_frequency(500).trend_rank(1).source("google_trends")
+                .build();
+
+        when(foodService.getTrendingFoodById(1L)).thenReturn(Optional.of(dto));
+
         mockMvc.perform(get("/trends/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value("success"));
+                .andExpect(jsonPath("$.status").value("success"))
+                .andExpect(jsonPath("$.data.name").value("마라탕"));
+    }
+
+    @Test
+    void getTrendingFood_byId_notFound_returns404() throws Exception {
+        when(foodService.getTrendingFoodById(999L)).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/trends/999"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value("error"));
     }
 }

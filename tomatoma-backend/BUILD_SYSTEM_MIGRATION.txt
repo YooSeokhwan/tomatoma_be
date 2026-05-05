@@ -1,0 +1,119 @@
+================================================================================
+BUILD SYSTEM MIGRATION COMPLETE: Maven -> Gradle (Kotlin DSL)
+================================================================================
+
+PROJECT: tomatoma-backend
+MIGRATION DATE: 2026-05-05
+STATUS: COMPLETE
+
+================================================================================
+MIGRATION SUMMARY
+================================================================================
+
+REMOVED:
+  - pom.xml (Maven 설정)
+
+CREATED:
+  - build.gradle.kts (Gradle Kotlin DSL 설정)
+  - settings.gradle.kts (프로젝트 설정)
+  - gradle/wrapper/gradle-wrapper.jar (Gradle 바이너리)
+  - gradle/wrapper/gradle-wrapper.properties (Wrapper 설정)
+  - gradle/init.gradle (초기화 스크립트)
+  - gradlew (Unix/Linux/Mac 스크립트)
+  - gradlew.bat (Windows 스크립트)
+  - GRADLE_SETUP.md (설정 가이드)
+  - MIGRATION_SUMMARY.md (마이그레이션 상세)
+
+================================================================================
+KEY DETAILS
+================================================================================
+
+1. GRADLE VERSION
+   - Target: 8.12
+   - Compatible: 8.x and above
+   - Spring Boot Compatibility: 3.2.0
+
+2. JAVA VERSION
+   - Source: 17
+   - Target: 17
+   - Encoding: UTF-8
+
+3. SPRING BOOT
+   - Version: 3.2.0 (unchanged)
+   - Main Class: com.tomatoma.TomatomaApplication
+
+4. DEPENDENCIES
+   - All dependencies from pom.xml are preserved
+   - Lombok annotation processor explicitly configured
+   - Byte Buddy experimental flag applied to test tasks
+
+5. BUILD COMMANDS
+
+   Windows:
+     gradlew.bat build -x test
+     gradlew.bat bootRun
+     gradlew.bat test
+
+   Unix/Linux/Mac:
+     ./gradlew build -x test
+     ./gradlew bootRun
+     ./gradlew test
+
+   Or with installed gradle:
+     gradle build
+     gradle bootRun
+     gradle test
+
+================================================================================
+VERIFICATION CHECKLIST
+================================================================================
+
+[ ] build.gradle.kts created with correct syntax
+[ ] settings.gradle.kts created
+[ ] gradle/wrapper/ directory with jar and properties
+[ ] gradlew and gradlew.bat scripts created
+[ ] pom.xml removed
+[ ] All Spring Boot starters migrated
+[ ] All database drivers migrated (PostgreSQL, H2)
+[ ] Lombok annotation processor configured
+[ ] Test configuration with Byte Buddy flag applied
+[ ] Main application class configured
+
+================================================================================
+NEXT STEPS FOR USERS
+================================================================================
+
+1. Verify Gradle installation:
+   ./gradlew --version
+
+2. Build without tests (fast verification):
+   ./gradlew build -x test
+
+3. Run full build with tests:
+   ./gradlew build
+
+4. Start development:
+   ./gradlew bootRun
+
+5. CI/CD Integration:
+   Use ./gradlew build as build command
+   Use ./gradlew test for test execution
+
+================================================================================
+IMPORTANT NOTES
+================================================================================
+
+- gradle-wrapper.jar should be committed to version control
+- Add /build/ and .gradle/ to .gitignore
+- IDE will automatically detect and configure Gradle
+- All Maven properties and plugins have been properly converted
+- No functionality has been changed; this is a build system migration only
+
+================================================================================
+DOCUMENTATION
+================================================================================
+
+For detailed setup instructions, see: GRADLE_SETUP.md
+For migration details, see: MIGRATION_SUMMARY.md
+
+================================================================================

@@ -1,0 +1,9 @@
+// Gradle init script to handle wrapper setup
+// This script is automatically executed when gradle runs
+
+rootProject {
+    if (!file("gradle/wrapper/gradle-wrapper.jar").exists()) {
+        logger.warn("gradle-wrapper.jar not found. This may cause issues.")
+        logger.warn("Please run: gradle wrapper --gradle-version 8.5")
+    }
+}

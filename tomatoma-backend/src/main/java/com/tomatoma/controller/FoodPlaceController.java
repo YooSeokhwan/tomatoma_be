@@ -5,6 +5,7 @@ import com.tomatoma.dto.ResponseDTO;
 import com.tomatoma.service.FoodService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,6 +60,11 @@ public class FoodPlaceController {
             @RequestParam Double longitude) {
 
         log.info("Fetching nearest places for food ID: {} at ({}, {})", trendFoodId, latitude, longitude);
+
+        if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ResponseDTO.error("유효하지 않은 좌표입니다. 위도: -90~90, 경도: -180~180", 400));
+        }
 
         List<FoodPlaceDTO> places = foodService.getNearestPlacesForFood(trendFoodId, latitude, longitude);
 

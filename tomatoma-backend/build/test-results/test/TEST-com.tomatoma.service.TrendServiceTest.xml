@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tomatoma.service.TrendServiceTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-05-05T10:33:29.616Z" hostname="DESKTOP-2F6FQIM" time="0.024">
+  <properties/>
+  <testcase name="updateTrendingFoods_updatesExistingFood()" classname="com.tomatoma.service.TrendServiceTest" time="0.01"/>
+  <testcase name="updateTrendingFoods_savesMultipleFoods()" classname="com.tomatoma.service.TrendServiceTest" time="0.004"/>
+  <testcase name="updateTrendingFoods_savesNewFood()" classname="com.tomatoma.service.TrendServiceTest" time="0.004"/>
+  <testcase name="updateTrendingFoods_handlesEmptyList()" classname="com.tomatoma.service.TrendServiceTest" time="0.004"/>
+  <system-out><![CDATA[19:33:29.620 [Test worker] INFO  com.tomatoma.service.TrendService - Updating 1 trending foods in database...
+19:33:29.622 [Test worker] INFO  com.tomatoma.service.TrendService - Updated trending foods in database
+19:33:29.630 [Test worker] INFO  com.tomatoma.service.TrendService - Updating 2 trending foods in database...
+19:33:29.631 [Test worker] INFO  com.tomatoma.service.TrendService - Updated trending foods in database
+19:33:29.635 [Test worker] INFO  com.tomatoma.service.TrendService - Updating 1 trending foods in database...
+19:33:29.636 [Test worker] INFO  com.tomatoma.service.TrendService - Updated trending foods in database
+19:33:29.639 [Test worker] INFO  com.tomatoma.service.TrendService - Updating 0 trending foods in database...
+19:33:29.639 [Test worker] INFO  com.tomatoma.service.TrendService - Updated trending foods in database
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tomatoma.service.FoodServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-05-05T10:33:29.336Z" hostname="DESKTOP-2F6FQIM" time="0.278">
+  <properties/>
+  <testcase name="getTrendingFoodsByCategory_returnsFilteredResults()" classname="com.tomatoma.service.FoodServiceTest" time="0.266"/>
+  <testcase name="getPlacesForFood_returnsEmptyListWhenNoPlaces()" classname="com.tomatoma.service.FoodServiceTest" time="0.004"/>
+  <testcase name="getTrendingFoods_emptyRepository_returnsEmptyPage()" classname="com.tomatoma.service.FoodServiceTest" time="0.002"/>
+  <testcase name="getTrendingFoods_returnsPageOfDTOs()" classname="com.tomatoma.service.FoodServiceTest" time="0.004"/>
+  <testcase name="searchTrendingFoods_returnsMatchingResults()" classname="com.tomatoma.service.FoodServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -61,6 +61,13 @@ public class FoodService {
     }
 
     /**
+     * Get a single trending food by ID
+     */
+    public Optional<TrendFoodDTO> getTrendingFoodById(Long id) {
+        return trendFoodRepository.findById(id).map(this::convertToDTO);
+    }
+
+    /**
      * Get places for a specific food
      */
     public List<FoodPlaceDTO> getPlacesForFood(Long trendFoodId) {

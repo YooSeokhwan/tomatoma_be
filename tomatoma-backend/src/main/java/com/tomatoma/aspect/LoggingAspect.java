@@ -18,12 +18,12 @@ public class LoggingAspect {
 
     private static final Logger log = LoggerFactory.getLogger(LoggingAspect.class);
 
-    // Controller 계층: 모든 공개 메서드
-    @Pointcut("within(com.tomatoma.controller..*)")
+    // Controller 계층: public 메서드만 (생성자, private 제외)
+    @Pointcut("execution(public * com.tomatoma.controller..*(..))")
     private void controllerLayer() {}
 
-    // Service 계층: 모든 공개 메서드
-    @Pointcut("within(com.tomatoma.service..*)")
+    // Service 계층: public 메서드만 (생성자, private 제외)
+    @Pointcut("execution(public * com.tomatoma.service..*(..))")
     private void serviceLayer() {}
 
     /**

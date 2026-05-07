@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useRef } from 'react'
 import TrendFoodCard from './TrendFoodCard'
 import LoadingSpinner from './LoadingSpinner'
 import { useTrendFoods, useSearchTrends } from '../hooks/useTrendFoods'
@@ -12,12 +12,16 @@ function TrendFoodList({
   sortBy,
   refreshKey,
 }) {
-  // Fetch trending foods
+  // Set → 안정적인 문자열 키 (참조 비교 문제 방지)
+  const categoryKey = Array.from(selectedCategories).sort().join(',')
+
+  // 카테고리 필터는 클라이언트에서 처리 → API엔 항상 null (다중 선택 지원)
   const { trends, loading: trendsLoading, error: trendsError } = useTrendFoods(
     0,
     50,
-    selectedCategories.size > 0 ? Array.from(selectedCategories)[0] : null,
-    sortBy
+    null,
+    sortBy,
+    refreshKey
   )
 
   // Search functionality
@@ -45,7 +49,7 @@ function TrendFoodList({
     }
 
     return filtered
-  }, [foodList, selectedCategories, sortBy, isSearching])
+  }, [foodList, categoryKey, sortBy, isSearching])
 
   if (loading) {
     return (

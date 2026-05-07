@@ -11,13 +11,22 @@ function PlaceDetailPopup({ place }) {
 
   const handleWebsite = () => {
     if (place.websiteUrl) {
-      window.open(place.websiteUrl, '_blank')
+      try {
+        const url = new URL(place.websiteUrl)
+        const isAllowedProtocol = url.protocol === 'http:' || url.protocol === 'https:'
+        const isInternalHost = /^(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(url.hostname)
+        if (isAllowedProtocol && !isInternalHost) {
+          window.open(place.websiteUrl, '_blank', 'noopener,noreferrer')
+        }
+      } catch {
+        // 유효하지 않은 URL
+      }
     }
   }
 
   const handleDirections = () => {
     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${place.latitude},${place.longitude}`
-    window.open(mapsUrl, '_blank')
+    window.open(mapsUrl, '_blank', 'noopener,noreferrer')
   }
 
   return (

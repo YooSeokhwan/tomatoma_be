@@ -1,70 +1,32 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api'
+import React, { useState, useEffect } from 'react'
+import { APIProvider, Map, AdvancedMarker, Pin, InfoWindow, useMap } from '@vis.gl/react-google-maps'
 import { useFoodPlaces } from '../hooks/useFoodPlaces'
 import { useGeolocation } from '../hooks/useGeolocation'
-import { categoryService } from '../services/categoryService'
-import { createMarkerIcon } from '../utils/mapUtils'
 import PlaceDetailPopup from './PlaceDetailPopup'
 import LoadingSpinner from './LoadingSpinner'
 import '../styles/GoogleMapsComponent.css'
 
-const mapContainerStyle = {
-  width: '100%',
-  height: '100%',
+const DEFAULT_CENTER = { lat: 37.5665, lng: 126.9780 }
+
+function MapCameraController({ target }) {
+  const map = useMap()
+  useEffect(() => {
+    if (map && target) map.panTo(target)
+  }, [map, target])
+  return null
 }
 
-const defaultMapCenter = {
-  lat: 37.5665,
-  lng: 126.9780,
-}
-
-function GoogleMapsComponent({ selectedFood, selectedCategories, refreshKey }) {
+function GoogleMapsComponent({ selectedFood, refreshKey }) {
   const apiKey = import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY
-  const { isLoaded, loadError } = useJsApiLoader({ googleMapsApiKey: apiKey || '' })
-
   const { latitude, longitude } = useGeolocation()
   const { places, loading: placesLoading } = useFoodPlaces(selectedFood?.id)
-  const [map, setMap] = useState(null)
   const [selectedPlace, setSelectedPlace] = useState(null)
-  const [categories, setCategories] = useState({})
-  const [mapCenter, setMapCenter] = useState(defaultMapCenter)
   const [visibleMarkers, setVisibleMarkers] = useState([])
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await categoryService.getCategories()
-        if (response.status === 'success') {
-          const categoryMap = {}
-          response.data.forEach((cat) => { categoryMap[cat.name] = cat })
-          setCategories(categoryMap)
-        }
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-      }
-    }
-    fetchCategories()
-  }, [])
-
-  useEffect(() => {
-    if (latitude && longitude) {
-      setMapCenter({ lat: latitude, lng: longitude })
-    }
-  }, [latitude, longitude])
-
-  useEffect(() => {
-    if (selectedFood) {
-      const filtered = selectedCategories.size > 0
-        ? places.filter(() => selectedCategories.has(selectedFood.category))
-        : places
-      setVisibleMarkers(filtered)
-    } else {
-      setVisibleMarkers([])
-    }
-  }, [places, selectedFood, selectedCategories, refreshKey])
-
-  const onLoad = useCallback((mapInstance) => setMap(mapInstance), [])
-  const onUnmount = useCallback(() => setMap(null), [])
+    setVisibleMarkers(selectedFood ? places : [])
+    setSelectedPlace(null)
+  }, [places, selectedFood, refreshKey])
 
   if (!apiKey) {
     return (
@@ -74,66 +36,59 @@ function GoogleMapsComponent({ selectedFood, selectedCategories, refreshKey }) {
     )
   }
 
-  if (loadError) {
-    return (
-      <div className="google-maps-component error">
-        <p>Google Maps 로드 실패: {loadError.message}</p>
-      </div>
-    )
-  }
-
-  if (!isLoaded) {
-    return (
-      <div className="google-maps-component">
-        <LoadingSpinner />
-      </div>
-    )
-  }
+  const userLocation = latitude && longitude ? { lat: latitude, lng: longitude } : null
 
   return (
     <div className="google-maps-component">
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        center={mapCenter}
-        zoom={13}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        options={{ fullscreenControl: false, streetViewControl: false }}
-      >
-        {latitude && longitude && (
-          <Marker
-            position={{ lat: latitude, lng: longitude }}
-            icon={{
-              path: window.google.maps.SymbolPath.CIRCLE,
-              scale: 8,
-              fillColor: '#4285F4',
-              fillOpacity: 1,
-              strokeColor: '#FFFFFF',
-              strokeWeight: 2,
-            }}
-            title="현재 위치"
-          />
-        )}
+      <APIProvider apiKey={apiKey}>
+        <Map
+          defaultCenter={DEFAULT_CENTER}
+          defaultZoom={13}
+          mapId="DEMO_MAP_ID"
+          fullscreenControl={false}
+          streetViewControl={false}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <MapCameraController target={userLocation} />
 
-        {visibleMarkers.map((place) => (
-          <Marker
-            key={place.id}
-            position={{ lat: place.latitude, lng: place.longitude }}
-            icon={createMarkerIcon(selectedFood?.color || '#FF5252')}
-            onClick={() => setSelectedPlace(place)}
-            title={place.name}
-          />
-        ))}
+          {userLocation && (
+            <AdvancedMarker position={userLocation} title="현재 위치">
+              <div style={{
+                width: 16,
+                height: 16,
+                borderRadius: '50%',
+                backgroundColor: '#4285F4',
+                border: '2px solid white',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+              }} />
+            </AdvancedMarker>
+          )}
 
-        {selectedPlace && (
-          <InfoWindow
-            position={{ lat: selectedPlace.latitude, lng: selectedPlace.longitude }}
-            onCloseClick={() => setSelectedPlace(null)}
-          >
-            <PlaceDetailPopup place={selectedPlace} />
-          </InfoWindow>
-        )}
-      </GoogleMap>
+          {visibleMarkers.map((place) => (
+            <AdvancedMarker
+              key={place.id}
+              position={{ lat: place.latitude, lng: place.longitude }}
+              title={place.name}
+              onClick={() => setSelectedPlace(place)}
+            >
+              <Pin
+                background={selectedFood?.color || '#FF5252'}
+                glyphColor="#FFFFFF"
+                borderColor="#FFFFFF"
+              />
+            </AdvancedMarker>
+          ))}
+
+          {selectedPlace && (
+            <InfoWindow
+              position={{ lat: selectedPlace.latitude, lng: selectedPlace.longitude }}
+              onClose={() => setSelectedPlace(null)}
+            >
+              <PlaceDetailPopup place={selectedPlace} />
+            </InfoWindow>
+          )}
+        </Map>
+      </APIProvider>
 
       {!selectedFood && (
         <div className="map-empty-state">

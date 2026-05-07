@@ -3,6 +3,8 @@ import { formatPrice, formatFrequencyBar } from '../utils/formatUtils'
 import '../styles/TrendFoodCard.css'
 
 function TrendFoodCard({ food, isSelected, onSelect }) {
+  if (!food) return null
+
   const frequencyBar = formatFrequencyBar(food.searchFrequency, 10000)
 
   return (
@@ -36,7 +38,7 @@ function TrendFoodCard({ food, isSelected, onSelect }) {
       </div>
 
       <div className="card-footer">
-        <div className="place-count">판매처: 미로딩</div>
+        <div className="place-count">판매처: {food.placeCount ?? 0}곳</div>
         <button className="btn btn-small" onClick={(e) => e.stopPropagation()}>
           상세보기
         </button>

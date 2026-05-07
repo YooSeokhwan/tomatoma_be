@@ -1,18 +1,4 @@
 /**
- * Create custom marker icon for Google Maps
- */
-export const createMarkerIcon = (color = '#FF5252') => {
-  return {
-    path: 'M 0,-25 Q 25,-52 25,-25 Q 25,0 0,25 Q -25,0 -25,-25 Q -25,-52 0,-25 Z',
-    fillColor: color,
-    fillOpacity: 1,
-    strokeColor: '#FFFFFF',
-    strokeWeight: 2,
-    scale: 1,
-  }
-}
-
-/**
  * Get color for category
  */
 export const getCategoryColor = (category, categoryMap) => {

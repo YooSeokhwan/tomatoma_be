@@ -1,19 +1,5 @@
-# Environment variables (contains API keys)
-.env
-*.env
-!.env.example
-
-# Java / Maven
+.gradle/
+build/
 target/
+.env
 *.class
-*.jar
-*.war
-
-# Node.js
-node_modules/
-dist/
-
-# IDE
-.idea/
-.vscode/
-*.iml

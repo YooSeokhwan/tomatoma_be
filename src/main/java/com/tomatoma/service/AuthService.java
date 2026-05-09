@@ -22,7 +22,7 @@ public class AuthService {
 
     @Transactional
     public User register(RegisterRequest request) {
-        if (userRepository.existsByUsername(request.getUserId())) {
+        if (userRepository.existsByUserId(request.getUserId())) {
             throw new IllegalArgumentException("이미 사용중인 ID입니다.");
         }
 
@@ -35,7 +35,7 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEmail(request.getEmail());
 
-        log.info("user = {}", user);
+        log.info("user = {}", user.toString());
 
         return userRepository.save(user);
     }

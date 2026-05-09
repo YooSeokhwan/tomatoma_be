@@ -21,4 +21,7 @@ public class RegisterRequest {
     @Size(min = 8, max = 50)
     private String email;
 
+    @Size
+    private String username;
+
 }

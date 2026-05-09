@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 public class User {
 
+    //db 인덱싱 id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +20,11 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    //사용자 id
     @Column(nullable = false, unique = true, length = 50)
+    private String userId;
+
+    @Column(length = 10)
     private String username;
 
     @Column(nullable = false, length = 255)
